@@ -66,7 +66,7 @@ class AccountMove(models.Model):
         tabla_4=self.env['stock.production.lot']
         tabla_5=self.env['stock.move']
         tabla_6=self.env['stock.move.line']
-        tabla_7=self.env['stock.package.level']
+        #tabla_7=self.env['stock.package.level']
         tabla_8=self.env['stock.quant.package']
         tabla_9=self.env['purchase.order']
         tabla_10=self.env['sale.order']
