@@ -60,7 +60,7 @@ class AccountMove(models.Model):
 
     def eliminar_inventario(self):
 
-        tabla_1=self.env['stock.picking']
+        tabla_1=self.env['stock.picking'].search([])
         tabla_2=self.env['stock.inventory']
         tabla_3=self.env['stock.quant']
         tabla_4=self.env['stock.production.lot']
