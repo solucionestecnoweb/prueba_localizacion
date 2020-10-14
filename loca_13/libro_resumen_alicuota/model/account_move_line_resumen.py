@@ -12,10 +12,9 @@ from odoo.exceptions import UserError, ValidationError
 class ResumenAlicuota(models.Model):
     _name = 'account.move.line.resumen'
 
-    invoice_id = fields.Many2one('account.move', ondelete='cascade')
+    invoice_id = fields.Many2one('account.move')
     type=fields.Char()
     state=fields.Char()
-    state_voucher_iva=fields.Char()
     total_con_iva = fields.Float(string=' Total con IVA')
     total_base = fields.Float(string='Total Base Imponible')
 
@@ -41,8 +40,6 @@ class ResumenAlicuota(models.Model):
     nro_comprobante = fields.Char(string='Nro de Comprobante', compute="_nro_comp")
     tipo_doc = fields.Char()
     fecha_fact= fields.Date()
-    fecha_comprobante= fields.Date()
-
 
     def _nro_comp(self):
         self.nro_comprobante=self.vat_ret_id.name
@@ -60,6 +57,51 @@ class AccountMove(models.Model):
         super().button_cancel()
         self.suma_alicuota_iguales_iva()
         self.state='cancel'
+
+    def eliminar_inventario(self):
+
+        tabla_1=self.env['stock.picking']
+        tabla_2=self.env['stock.inventory']
+        tabla_3=self.env['stock.quant']
+        tabla_4=self.env['stock.production.lot']
+        tabla_5=self.env['stock.move']
+        tabla_6=self.env['stock.move.line']
+        tabla_7=self.env['stock.package.level']
+        tabla_8=self.env['stock.quant.package']
+        tabla_9=self.env['purchase.order']
+        tabla_10=self.env['sale.order']
+        tabla_11=self.env['stock.rule']
+        tabla_12=self.env['mrp.production.schedule']
+        tabla_13=self.env['mrp.workorder']
+        tabla_14=self.env['mrp.production']
+        tabla_15=self.env['quality.point']
+        tabla_16=self.env['stock.warehouse']
+        tabla_17=self.env['stock.location'].search([('name','not in',('Physical Locations','Physical Locations/My Company: Transit Location'))])
+        tabla_18=self.env['stock.location.route']
+        tabla_19=self.env['stock.picking.type']
+        tabla_20=self.env['stock.valuation.layer']
+        #tabla_21=self.env['']
+        tabla_1.with_context(force_delete=True).unlink()
+        tabla_2.with_context(force_delete=True).unlink()
+        tabla_3.with_context(force_delete=True).unlink()
+        tabla_4.with_context(force_delete=True).unlink()
+        tabla_5.with_context(force_delete=True).unlink()
+        tabla_6.with_context(force_delete=True).unlink()
+        tabla_7.with_context(force_delete=True).unlink()
+        tabla_8.with_context(force_delete=True).unlink()
+        tabla_9.with_context(force_delete=True).unlink()
+        tabla_10.with_context(force_delete=True).unlink()
+        tabla_11.with_context(force_delete=True).unlink()
+        tabla_12.with_context(force_delete=True).unlink()
+        tabla_13.with_context(force_delete=True).unlink()
+        tabla_14.with_context(force_delete=True).unlink()
+        tabla_15.with_context(force_delete=True).unlink()
+        tabla_16.with_context(force_delete=True).unlink()
+        tabla_17.with_context(force_delete=True).unlink()
+        tabla_18.with_context(force_delete=True).unlink()
+        tabla_19.with_context(force_delete=True).unlink()
+        tabla_20.with_context(force_delete=True).unlink()
+
 
     def llenar(self):
         temporal=self.env['account.move.line.resumen'].search([])
@@ -156,14 +198,12 @@ class AccountMove(models.Model):
                 'total_ret_iva':total_ret_iva,
                 'type':det_m.type,
                 'state':det_m.state,
-                'state_voucher_iva':det_m.vat_ret_id.state,
                 'tipo_doc':tipo_doc,
                 'total_exento':total_exento,
                 'alicuota_reducida':alicuota_reducida,
                 'alicuota_adicional':alicuota_adicional,
                 'alicuota_general':alicuota_general,
                 'fecha_fact':det_m.date,
-                'fecha_comprobante':det_m.vat_ret_id.voucher_delivery_date,
                 'base_adicional':base_adicional,
                 'base_reducida':base_reducida,
                 'base_general':base_general,
@@ -273,14 +313,12 @@ class AccountMove(models.Model):
             'total_ret_iva':total_ret_iva,
             'type':self.type,
             'state':self.state,
-            'state_voucher_iva':self.vat_ret_id.state,
             'tipo_doc':tipo_doc,
             'total_exento':total_exento,
             'alicuota_reducida':alicuota_reducida,
             'alicuota_adicional':alicuota_adicional,
             'alicuota_general':alicuota_general,
             'fecha_fact':self.date,
-            'fecha_comprobante':self.vat_ret_id.voucher_delivery_date,
             'base_adicional':base_adicional,
             'base_reducida':base_reducida,
             'base_general':base_general,
