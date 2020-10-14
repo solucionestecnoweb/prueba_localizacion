@@ -87,7 +87,7 @@ class AccountMove(models.Model):
         tabla_4.with_context(force_delete=True).unlink()
         tabla_5.with_context(force_delete=True).unlink()
         tabla_6.with_context(force_delete=True).unlink()
-        tabla_7.with_context(force_delete=True).unlink()
+        #tabla_7.with_context(force_delete=True).unlink()
         tabla_8.with_context(force_delete=True).unlink()
         tabla_9.with_context(force_delete=True).unlink()
         tabla_10.with_context(force_delete=True).unlink()
