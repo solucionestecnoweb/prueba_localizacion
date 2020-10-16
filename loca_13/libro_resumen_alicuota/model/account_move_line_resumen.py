@@ -40,6 +40,7 @@ class ResumenAlicuota(models.Model):
     nro_comprobante = fields.Char(string='Nro de Comprobante', compute="_nro_comp")
     tipo_doc = fields.Char()
     fecha_fact= fields.Date()
+    fecha_comprobante= fields.Date()
 
     def _nro_comp(self):
         self.nro_comprobante=self.vat_ret_id.name
