@@ -157,8 +157,8 @@ class resumen_libros(models.TransientModel):
 
     def ret_iva(self): # calcula las retenciones que han hecho los clientes
         cursor_resumen = self.env['account.move.line.resumen'].search([
-            #('fecha_comprobante','>=',self.date_from),
-            #('fecha_comprobante','<=',self.date_to),
+            ('fecha_comprobante','>=',self.date_from),
+            ('fecha_comprobante','<=',self.date_to),
             #('fecha_fact','<',self.date_from),
             #('fecha_fact','>=',self.date_to),
             ('type','in',('out_invoice','out_refund','out_receipt'))
