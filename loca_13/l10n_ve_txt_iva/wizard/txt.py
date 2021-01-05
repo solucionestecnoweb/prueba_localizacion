@@ -72,7 +72,7 @@ def formato_periodo(valor):
 def rif_format(aux,aux_type):
     nro_doc=aux
     tipo_doc=aux_type
-    """nro_doc=nro_doc.replace('V','')
+    nro_doc=nro_doc.replace('V','')
     nro_doc=nro_doc.replace('v','')
     nro_doc=nro_doc.replace('E','')
     nro_doc=nro_doc.replace('e','')
@@ -82,7 +82,7 @@ def rif_format(aux,aux_type):
     nro_doc=nro_doc.replace('j','')
     nro_doc=nro_doc.replace('P','')
     nro_doc=nro_doc.replace('p','')
-    nro_doc=nro_doc.replace('-','')"""
+    nro_doc=nro_doc.replace('-','')
     if tipo_doc=="v":
         tipo_doc="V"
     if tipo_doc=="e":
