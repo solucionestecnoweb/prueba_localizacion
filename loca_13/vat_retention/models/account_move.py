@@ -159,11 +159,11 @@ class AccountMove(models.Model):
             # se crean los asientos
             #self.asiento_retencion(self.id)
 
-    def conv_div_nac(self,valor):
+    def conv_div_na(self,valor):
         self.currency_id.id
         fecha_contable_doc=self.date
         monto_factura=self.amount_total
-        valor_aux=0
+        valor_aux=69
         raise UserError(_('moneda compañia: %s')%self.company_id.currency_id.id)
         if self.currency_id.id!=self.company_id.currency_id.id:
             tasa= self.env['res.currency.rate'].search([('currency_id','=',self.currency_id.id),('name','<=',self.date)],order="name asc")
@@ -174,7 +174,6 @@ class AccountMove(models.Model):
             #raise UserError(_('rate: %s')%rate)
             #rate=round(valor_aux,2)  # ODOO SH
             resultado=valor*rate
-            resultado=valor*1075000
         else:
             resultado=valor
         return resultado
@@ -219,9 +218,9 @@ class AccountMove(models.Model):
                 'invoice_id': self.id,
                 'move_id': self.id,
                 'invoice_number': self.invoice_number,
-                'amount_untaxed': self.conv_div_nac(importe_base),
-                'retention_amount':self.conv_div_nac(monto_retenido),
-                'amount_vat_ret':120, #self.conv_div_nac(monto_iva),
+                'amount_untaxed': self.conv_div_na(importe_base),
+                'retention_amount':self.conv_div_na(monto_retenido),
+                'amount_vat_ret':self.conv_div_na(monto_iva),
                 'retention_rate':por_ret,
                 'retention_id':ret.id,
                 'tax_id':det_mov_line.tax_ids.id,
