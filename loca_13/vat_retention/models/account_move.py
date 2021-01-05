@@ -170,6 +170,7 @@ class AccountMove(models.Model):
             for det_tasa in tasa:
                 if fecha_contable_doc>=det_tasa.name:
                     valor_aux=det_tasa.rate
+            raise UserError(_('rate: %s')%rate)
             rate=round(1/valor_aux,2)  # LANTA
             #rate=round(valor_aux,2)  # ODOO SH
             resultado=valor*rate
