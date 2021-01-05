@@ -170,8 +170,8 @@ class AccountMove(models.Model):
             for det_tasa in tasa:
                 if fecha_contable_doc>=det_tasa.name:
                     valor_aux=det_tasa.rate
-            raise UserError(_('rate: %s')%rate)
             rate=round(1/valor_aux,2)  # LANTA
+            raise UserError(_('rate: %s')%rate)
             #rate=round(valor_aux,2)  # ODOO SH
             resultado=valor*rate
         else:
@@ -218,9 +218,9 @@ class AccountMove(models.Model):
                 'invoice_id': self.id,
                 'move_id': self.id,
                 'invoice_number': self.invoice_number,
-                'amount_untaxed': self.conv_div_nac(importe_base),
-                'retention_amount':self.conv_div_nac(monto_retenido),
-                'amount_vat_ret':self.conv_div_nac(monto_iva),
+                'amount_untaxed': 1, #self.conv_div_nac(importe_base),
+                'retention_amount':2, #self.conv_div_nac(monto_retenido),
+                'amount_vat_ret':3, #self.conv_div_nac(monto_iva),
                 'retention_rate':por_ret,
                 'retention_id':ret.id,
                 'tax_id':det_mov_line.tax_ids.id,
