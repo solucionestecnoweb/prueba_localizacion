@@ -221,7 +221,7 @@ class AccountMove(models.Model):
                 'invoice_number': self.invoice_number,
                 'amount_untaxed': self.conv_div_nac(importe_base),
                 'retention_amount':self.conv_div_nac(monto_retenido),
-                'amount_vat_ret':120; #self.conv_div_nac(monto_iva),
+                'amount_vat_ret':120, #self.conv_div_nac(monto_iva),
                 'retention_rate':por_ret,
                 'retention_id':ret.id,
                 'tax_id':det_mov_line.tax_ids.id,
