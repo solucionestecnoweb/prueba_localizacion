@@ -164,7 +164,7 @@ class AccountMove(models.Model):
         fecha_contable_doc=self.date
         monto_factura=self.amount_total
         valor_aux=0
-        #raise UserError(_('moneda compañia: %s')%self.company_id.currency_id.id)
+        raise UserError(_('moneda compañia: %s')%self.company_id.currency_id.id)
         if self.currency_id.id!=self.company_id.currency_id.id:
             tasa= self.env['res.currency.rate'].search([('currency_id','=',self.currency_id.id),('name','<=',self.date)],order="name asc")
             for det_tasa in tasa:
@@ -218,9 +218,9 @@ class AccountMove(models.Model):
                 'invoice_id': self.id,
                 'move_id': self.id,
                 'invoice_number': self.invoice_number,
-                'amount_untaxed': 1, #self.conv_div_nac(importe_base),
-                'retention_amount':2, #self.conv_div_nac(monto_retenido),
-                'amount_vat_ret':3, #self.conv_div_nac(monto_iva),
+                'amount_untaxed': self.conv_div_nac(importe_base),
+                'retention_amount':self.conv_div_nac(monto_retenido),
+                'amount_vat_ret':self.conv_div_nac(monto_iva),
                 'retention_rate':por_ret,
                 'retention_id':ret.id,
                 'tax_id':det_mov_line.tax_ids.id,
